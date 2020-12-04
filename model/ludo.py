@@ -95,9 +95,8 @@ def novoJogo():
 def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 		casaDestino = tabuleiro[jogador][peca] + valorDado
 
-		if casaDestino >= 53 and tabuleiro[jogador].count(casaDestino) > 0:
-				pass
-				#return False
+		if 53 <= casaDestino < 58 and tabuleiro[jogador].count(casaDestino) > 0:
+			return False
 	
 		if valorDado == 5:
 				if tabuleiro[jogador][peca] == casaInicial:

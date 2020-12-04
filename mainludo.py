@@ -1,7 +1,13 @@
 import tkinter
+from tkinter import ttk
 from view import des_canvas
 from model import ludo
 from controller import handler
+
+def getValor():
+	v = int(escolhevalor.get())
+	escolhevalor.set("")
+	handler.escolheuDado(v)
 
 raiz = tkinter.Tk()
 raiz.title("Super Ludo")
@@ -34,8 +40,19 @@ texto.pack(pady=10)
 cnvdado = tkinter.Canvas(botoes, height=50, width=50)
 cnvdado.pack(pady=10)
 
+texto2 = tkinter.Label(botoes, text="Escolha o valor do dado:")
+texto2.config(font="Arial 12 bold", bd=2, height=1, width=30)
+texto2.pack(pady=5)
+
+escolhevalor = ttk.Combobox(botoes, values=list(range(1,7)))
+escolhevalor.pack(pady=5)
+
+enviavalor = tkinter.Button(botoes, text="Enviar", command=getValor)
+enviavalor.config(font="Arial 9 bold", bg="white", bd=2, height=1, width=7)
+enviavalor.pack(pady=3)
+
 lancar = tkinter.Button(botoes, text="Lançar Dado", command=handler.lanca)
-lancar.pack(pady=50)
+lancar.pack(pady=30)
 
 for i in (njogo, carregar, salvar, lancar):
 	i.config(font="Arial 12 bold", bg="white", bd=2, height=1, width=18)

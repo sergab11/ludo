@@ -1,1 +1,1 @@
-{'jogadorVez': 0, 'qtdDado6': 1, 'pecaAnterior6': 2, 'tabuleiro': [[58, 58, 41, 57], [58, 58, 15, 0], [13, 0, 38, 0], [40, 0, 0, 0]]}
+{'jogadorVez': 0, 'qtdDado6': 1, 'pecaAnterior6': 2, 'tabuleiro': [[58, 53, 41, 57], [58, 58, 15, 0], [13, 0, 38, 0], [40, 0, 0, 0]]}
