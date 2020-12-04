@@ -2,6 +2,27 @@ import random
 from controller import handler
 from view import des_canvas
 
+def salvaContexto(jogo, arquivo):
+		for i in range(4):
+				for j in range(4):
+						arquivo.write(str(jogo['tabuleiro'][i][j]))
+						arquivo.write("\t")
+				arquivo.write("\n")
+		arquivo.write(str(jogo['jogadorVez']))
+
+def carregaContexto(jogo, arquivo):
+		i = 0
+		for linha in arquivo: 
+				atual = linha.strip()
+				if i == 4:
+						jogo['jogadorVez'] = int(atual)
+						break
+				cont = atual.split()
+				for j in range(4):
+						jogo['tabuleiro'][i][j] = int(cont[j])
+				i += 1
+		return jogo
+
 def proximo(jogo):
 		jogo['jogadorVez'] += 1
 		jogo['jogadorVez'] %= 4
@@ -91,13 +112,11 @@ def novoJogo():
         ]
     }
 
-
 def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 		casaDestino = tabuleiro[jogador][peca] + valorDado
 
 		if casaDestino >= 53 and tabuleiro[jogador].count(casaDestino) > 0:
-				pass
-				#return False
+				return False
 	
 		if valorDado == 5:
 				if tabuleiro[jogador][peca] == casaInicial:
@@ -203,7 +222,7 @@ def moverPeca(jogo, peca, valorDado, naoMove6):
 		if valorDado != 6:
 				jogo['qtdDado6'] = 0
 
-		for i in range (4):
-				print("%d %d %d %d\n%d %d %d %d\n\n" %(jogo['tabuleiro'][i][0], jogo['tabuleiro'][i][1], jogo['tabuleiro'][i][2], jogo['tabuleiro'][i][3], casaJogador(jogo['tabuleiro'][i][0], i), casaJogador(jogo['tabuleiro'][i][1], i), casaJogador(jogo['tabuleiro'][i][2], i), casaJogador(jogo['tabuleiro'][i][3], i)))
-		print("---------------------------------------------------------------")
+		#for i in range (4):
+				#print("%d %d %d %d\n%d %d %d %d\n\n" %(jogo['tabuleiro'][i][0], jogo['tabuleiro'][i][1], jogo['tabuleiro'][i][2], jogo['tabuleiro'][i][3], casaJogador(jogo['tabuleiro'][i][0], i), casaJogador(jogo['tabuleiro'][i][1], i), casaJogador(jogo['tabuleiro'][i][2], i), casaJogador(jogo['tabuleiro'][i][3], i)))
+		#print("---------------------------------------------------------------")
 		proximo(jogo)
