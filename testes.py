@@ -1,5 +1,7 @@
-from ludo import *
-import des_canvas
+import tkinter
+from view import des_canvas
+from model.ludo import *
+from controller import handler
 
 def tNaoTemBarreira():
     tabuleiro = [
@@ -413,7 +415,8 @@ tVoltaCasaInicial, tPrimeiraRodadaPodeMoverPecaCasaInicial, tPrimeiraRodadaPodeM
 tPodeMoverPecaCasaInicial, tCasaSaidaVazia, tCasaInicialVazia, tPodeCairAbrigo, tImpedimentoAbrigo, tCasaCheia,
 tCasaJogadorCasaComum1, tCasaJogadorCasaComum2, tCasaJogadorRetaFinal, tCasaTabuleiroCasaComum1,
 tCasaTabuleiroCasaComum2, tCasaTabuleiroRetaFinal]:
-    print(t.__name__, ':', t())
+    pass
+    #print(t.__name__, ':', t())
 
 #InterfaceGrafica
 for t in [tcoordCasasIniciais, tcoordCasasBrancas, tcoordRetaFinal, tMostraTelaInicial, tMostraTelaAbrigo, tMostraTelaBarreira, 

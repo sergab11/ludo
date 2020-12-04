@@ -79,14 +79,25 @@ casasBrancas = 13
 casaFinal = 58
 
 def novoJogo():
-    return {
+    # return {
+    #     'jogadorVez': 0,
+    #     'qtdDado6': 0,
+    #     'pecaAnterior6': 0,
+    #     'tabuleiro': [
+    #         [casaSaida(0), 0, 0, 0],
+    #         [casaSaida(1), 0, 0, 0],
+    #         [casaSaida(2), 0, 0, 0],
+    #         [casaSaida(3), 0, 0, 0]
+    #     ]
+    # }
+	return {
         'jogadorVez': 0,
         'qtdDado6': 0,
         'pecaAnterior6': 0,
         'tabuleiro': [
-            [casaSaida(0), 0, 0, 0],
-            [casaSaida(1), 0, 0, 0],
-            [casaSaida(2), 0, 0, 0],
+            [58, 58, 35, 57],
+            [58, 58, 15, 0],
+            [13, 0, 38, 0],
             [casaSaida(3), 0, 0, 0]
         ]
     }
@@ -95,7 +106,8 @@ def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 		casaDestino = tabuleiro[jogador][peca] + valorDado
 
 		if casaDestino >= 53 and tabuleiro[jogador].count(casaDestino) > 0:
-				return False
+				pass
+				#return False
 	
 		if valorDado == 5:
 				if tabuleiro[jogador][peca] == casaInicial:

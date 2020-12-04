@@ -20,11 +20,11 @@ botoes.pack(side="top", fill='y')
 njogo = tkinter.Button(botoes, text="Novo Jogo", command=handler.novoJ)
 njogo.pack(pady=10)
 
-carregar = tkinter.Button(botoes, text="Carregar Jogo")
+carregar = tkinter.Button(botoes, text="Carregar Jogo", command=handler.carregarJogo)
 carregar.pack(pady=10)
 
-salvar = tkinter.Button(botoes, state="disabled", text="Salvar")
-salvar.config(state="disabled")
+salvar = tkinter.Button(botoes, text="Salvar", command=handler.salvarJogo)
+#salvar.config(state="disabled")
 salvar.pack(pady=10)
 
 texto = tkinter.Label(botoes, text="A JOGAR:")
