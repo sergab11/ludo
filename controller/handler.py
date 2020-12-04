@@ -78,9 +78,10 @@ def mouseClica(event):
 	
 	print(jogo['jogadorVez'], pecaEscolhida, valorDado, ":", ludo.podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], pecaEscolhida, valorDado))
 	if ludo.podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], pecaEscolhida, valorDado):
+		jogadorAtual = jogo['jogadorVez']
 		ludo.moverPeca(jogo, pecaEscolhida, valorDado, True)
 		des_canvas.aposclique()
-		if jogo['tabuleiro'][jogo['jogadorVez']-1].count(58) == 4:
+		if jogo['tabuleiro'][jogadorAtual].count(58) == 4:
 			colocacao = list(range(4))
 			colocacao.sort(key=lambda x: sum(jogo['tabuleiro'][x]), reverse=True)
 			#print('colocacao', colocacao)

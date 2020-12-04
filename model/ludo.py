@@ -56,7 +56,7 @@ def casaTabuleiro(casaJogador, jogador):
 				else:
 						return c%((4 * casasBrancas))
 		else:
-				return casaJogador
+				return casaJogador+1
 
 def casaSaida(jogador):
     return casaTabuleiro(1, jogador)
@@ -93,8 +93,8 @@ def novoJogo():
 
 
 def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
-		casaDestino = tabuleiro[jogador][peca] + valorDado
-
+		casaDestino = casaTabuleiro(casaJogador(tabuleiro[jogador][peca], jogador) + valorDado, jogador)
+		print('merda', valorDado, tabuleiro[jogador][peca], casaDestino, tabuleiro[jogador].count(casaDestino))
 		if 53 <= casaDestino < 58 and tabuleiro[jogador].count(casaDestino) > 0:
 			return False
 	
@@ -132,9 +132,7 @@ def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 						return False
 
 		if tabuleiro[jogador][peca] in bs:
-				if valorDado != 6:
-						return False
-				else:
+				if valorDado == 6:
 						if casaDestino in abrigos:
 								if casa2Pecas(tabuleiro, casaDestino) or (casaDestino) in tabuleiro[jogador]:
 										return False
@@ -150,10 +148,10 @@ def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 		return True
 
 
-def moverPeca(jogo, peca, valorDado, naoMove6):
+def moverPeca(jogo, peca, valorDado, ehValorDado):
+		ehValorDado = True
 		if not podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], peca, valorDado):
 				return    
-
 		if valorDado == 5:
 				if jogo['tabuleiro'][jogo['jogadorVez']][peca] == 0:
 						jogo['tabuleiro'][jogo['jogadorVez']][peca] = casaSaida(jogo['jogadorVez'])
@@ -193,9 +191,10 @@ def moverPeca(jogo, peca, valorDado, naoMove6):
 								proximo(jogo)
 								handler.valorDado = 6
 								des_canvas.jogou(6)
+								ehValorDado = False
 								return
 
-		if valorDado == 6 and naoMove6:
+		if valorDado == 6 and ehValorDado:
 				jogo['pecaAnterior6'] = peca
 				jogo['qtdDado6'] += 1
 				jogo['jogadorVez'] -= 1
@@ -203,6 +202,11 @@ def moverPeca(jogo, peca, valorDado, naoMove6):
 				jogo['qtdDado6'] = 0
 
 		for i in range (4):
-				print("%d %d %d %d\n%d %d %d %d\n\n" %(jogo['tabuleiro'][i][0], jogo['tabuleiro'][i][1], jogo['tabuleiro'][i][2], jogo['tabuleiro'][i][3], casaJogador(jogo['tabuleiro'][i][0], i), casaJogador(jogo['tabuleiro'][i][1], i), casaJogador(jogo['tabuleiro'][i][2], i), casaJogador(jogo['tabuleiro'][i][3], i)))
+				for p in range (4):
+						print("%d " %(jogo['tabuleiro'][i][p]),  end='')
+				print('')
+				for p in range (4):
+						print("%d " %(casaJogador(jogo['tabuleiro'][i][p], i)),  end='')
+				print('\n\n')
 		print("---------------------------------------------------------------")
 		proximo(jogo)
