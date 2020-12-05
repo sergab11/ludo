@@ -51,6 +51,7 @@ def trata5():
 				ludo.moverPeca(jogo, pecaEscolhida, 5, True)
 				des_canvas.aposclique()
 
+
 def clicouCasa(coordCasa, coordPonteiro):
 	cx, cy = coordCasa
 	px, py = coordPonteiro
@@ -69,24 +70,22 @@ def escolhePeca(tabuleiro, jogadorVez, coordPonteiro):
 
 def mouseClica(event):
 	global valorDado, jogo
+	c = 0
 	cores = ["red", "green", "yellow", "blue"]
-	print([event.x, event.y])
 	pecaEscolhida = escolhePeca(jogo['tabuleiro'], jogo['jogadorVez'], [event.x, event.y])
-	print(pecaEscolhida)
 	if pecaEscolhida == -1:
 		return
 	
-	print(jogo['jogadorVez'], pecaEscolhida, valorDado, ":", ludo.podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], pecaEscolhida, valorDado))
 	if ludo.podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], pecaEscolhida, valorDado):
 		jogadorAtual = jogo['jogadorVez']
-		ludo.moverPeca(jogo, pecaEscolhida, valorDado, True)
+		c = ludo.moverPeca(jogo, pecaEscolhida, valorDado, True)
 		des_canvas.aposclique()
 		if jogo['tabuleiro'][jogadorAtual].count(58) == 4:
 			colocacao = list(range(4))
 			colocacao.sort(key=lambda x: sum(jogo['tabuleiro'][x]), reverse=True)
-			#print('colocacao', colocacao)
 			messagebox.showinfo(message=str([cores[i] + ":  " + str(sum(jogo['tabuleiro'][i])) for i in colocacao]))
-	 
+	if c == 6:
+		escolheuDado(6)
 	return
 
 def salvarJogo():
@@ -99,18 +98,13 @@ def salvarJogo():
 	text2save = str(jogo) # starts from `1.0`, not `0.0`
 	f.write(text2save)
 	f.close()
-	# f = open("jogoSalvo.txt", "w")
-	# f.write(str(jogo))
-	# f.close()
 
 def carregarJogo():
 	global jogo
-	#f = open("jogoSalvo.txt", "r")
 	input = filedialog.askopenfile(initialdir=".", title="Carregar Jogo - Super Ludo", filetypes=(("text files","*.txt"),("all files","*.*")))
 	if input == None:
 		messagebox.showerror("Erro", "Erro ao carregar arquivo!")
 		return
 	jogo = json.loads(input.read().replace("'", "\"")) 
 	input.close()
-	print(jogo['tabuleiro'])
 	des_canvas.novo()
