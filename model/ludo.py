@@ -2,6 +2,8 @@ import random
 from controller import handler
 from view import des_canvas
 
+capt = 0
+
 def proximo(jogo):
 		jogo['jogadorVez'] += 1
 		jogo['jogadorVez'] %= 4
@@ -79,7 +81,7 @@ casasBrancas = 13
 casaFinal = 58
 
 def novoJogo():
-    return {
+		return {
         'jogadorVez': 0,
         'qtdDado6': 0,
         'pecaAnterior6': 0,
@@ -94,7 +96,6 @@ def novoJogo():
 
 def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 		casaDestino = casaTabuleiro(casaJogador(tabuleiro[jogador][peca], jogador) + valorDado, jogador)
-		print('merda', valorDado, tabuleiro[jogador][peca], casaDestino, tabuleiro[jogador].count(casaDestino))
 		if 53 <= casaDestino < 58 and tabuleiro[jogador].count(casaDestino) > 0:
 			return False
 	
@@ -127,9 +128,6 @@ def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 				return False
 
 		bs = barreiras(tabuleiro, jogador)	
-		for b in bs:		
-				if 0 < casaJogador(b, jogador) - casaJogador(tabuleiro[jogador][peca], jogador) <= valorDado:
-						return False
 
 		if tabuleiro[jogador][peca] in bs:
 				if valorDado == 6:
@@ -141,14 +139,21 @@ def podeMoverPeca(tabuleiro, jogador, peca, valorDado):
 						if barreirasOponentesTrajeto(tabuleiro, jogador, peca, valorDado):
 								return False
 						bs.remove(tabuleiro[jogador][peca])
-						for b in bs:		
+						for b in bs:
 								if 0 < casaJogador(b, jogador) - casaJogador(tabuleiro[jogador][peca], jogador) <= valorDado:
 										return False
+				else:
+						return False
+
+		for b in bs:
+				if 0 < casaJogador(b, jogador) - casaJogador(tabuleiro[jogador][peca], jogador) <= valorDado:
+						return False
 
 		return True
 
 
 def moverPeca(jogo, peca, valorDado, ehValorDado):
+		global capt
 		ehValorDado = True
 		if not podeMoverPeca(jogo['tabuleiro'], jogo['jogadorVez'], peca, valorDado):
 				return    
@@ -186,13 +191,18 @@ def moverPeca(jogo, peca, valorDado, ehValorDado):
 										cap = i
 						if not jogo['tabuleiro'][oponente][cap] in abrigos and not jogo['tabuleiro'][oponente][cap] == casaSaida(oponente):
 								jogo['tabuleiro'][oponente][cap] = 0
-								jogo['jogadorVez'] -= 1
 								jogo['qtdDado6'] = 0
-								proximo(jogo)
-								handler.valorDado = 6
-								des_canvas.jogou(6)
+								capt = 1					
 								ehValorDado = False
-								return
+								return 6
+		if capt == 1:
+				capt = 0
+				proximo(jogo)
+				des_canvas.aposclique()
+
+		if jogo['tabuleiro'][jogo['jogadorVez']][peca] == 58:
+				capt = 1
+				return 6
 
 		if valorDado == 6 and ehValorDado:
 				jogo['pecaAnterior6'] = peca
@@ -201,12 +211,5 @@ def moverPeca(jogo, peca, valorDado, ehValorDado):
 		if valorDado != 6:
 				jogo['qtdDado6'] = 0
 
-		for i in range (4):
-				for p in range (4):
-						print("%d " %(jogo['tabuleiro'][i][p]),  end='')
-				print('')
-				for p in range (4):
-						print("%d " %(casaJogador(jogo['tabuleiro'][i][p], i)),  end='')
-				print('\n\n')
-		print("---------------------------------------------------------------")
 		proximo(jogo)
+		return 1
